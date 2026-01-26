@@ -1,3 +1,2 @@
 # Water-Quality-Prediction
-
-sniff is gay
+Welcome to our water quality prediction!!!!
