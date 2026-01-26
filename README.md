@@ -1,4 +1,2 @@
 # Water-Quality-Prediction
-
-sniff is gay
-sniff is a fucking chopped ass chud
+Welcome to our water quality prediction!!!!
