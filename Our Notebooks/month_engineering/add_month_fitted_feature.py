@@ -52,10 +52,18 @@ for filename, config in datasets_config.items():
     
     print(f"  Original shape: {df.shape}")
     
-    # Convert sample_date to datetime and extract month
-    # Dates are already in ISO format (YYYY-MM-DD) from previous processing
-    df['sample_date'] = pd.to_datetime(df['sample_date'])
-    df['month'] = df['sample_date'].dt.month
+    # Check if sample_date exists and extract month
+    if 'sample_date' in df.columns:
+        # Convert sample_date to datetime and extract month
+        # Dates are already in ISO format (YYYY-MM-DD) from previous processing
+        df['sample_date'] = pd.to_datetime(df['sample_date'])
+        df['month'] = df['sample_date'].dt.month
+    elif 'month_fitted' in df.columns:
+        print(f"  ⚠ month_fitted already exists - skipping this dataset")
+        continue
+    else:
+        print(f"  ⚠ WARNING: Neither sample_date nor month_fitted found - cannot process")
+        continue
     
     # Get the appropriate model and parameters
     param_type = config['param']
@@ -78,8 +86,10 @@ for filename, config in datasets_config.items():
         print(f"  WARNING: Unknown model type: {model_type}")
         continue
     
-    # Drop the temporary 'month' column (keep only month_fitted)
-    df = df.drop(columns=['month'])
+    # Drop the temporary 'month' column and 'sample_date' if they exist
+    cols_to_drop = [col for col in ['month', 'sample_date'] if col in df.columns]
+    if cols_to_drop:
+        df = df.drop(columns=cols_to_drop)
     
     print(f"  New shape: {df.shape}")
     print(f"  month_fitted statistics:")
