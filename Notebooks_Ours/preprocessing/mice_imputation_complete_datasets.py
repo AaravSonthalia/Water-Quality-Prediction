@@ -20,7 +20,7 @@ print("="*80)
 print("MICE IMPUTATION FOR COMPLETE TRAINING DATASETS")
 print("="*80)
 
-data_path = Path('New Datasets/Combined/Final Datasets')
+data_path = Path('Datasets_Ours/Final Datasets')
 
 # Load datasets
 drp_complete = pd.read_csv(data_path / 'drp_training_complete.csv')
